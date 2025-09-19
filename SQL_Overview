@@ -1,0 +1,5 @@
+# SQL Queries
+
+This page documents the SQL used for the HR Absenteeism & Health Incentive Analysis project.  
+All queries target SQL Server tables: `Absenteeism_at_work`, `compensation`, and `Reasons`.
+
