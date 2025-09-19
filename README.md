@@ -50,6 +50,8 @@ The dataset covers **employee absenteeism and health records**.
 
 *(If you’d like to view screenshots, they are included in this repo.)*
 
+<iframe title="HR_Analysis_Dashboard" width="600" height="373.5" src="https://app.powerbi.com/view?r=eyJrIjoiYTE3NGM1MjYtMTA3MC00OGMyLTk0YzQtYTJhZjgwMjE2ODJlIiwidCI6IjllZjlmNDg5LWUwYTAtNGVlYi04N2NjLTNhNTI2MTEyZmQwZCIsImMiOjF9" frameborder="0" allowFullScreen="true"></iframe>
+
 ---
 
 ## 📌 Key Insights
