@@ -1,4 +1,4 @@
-# HR Absenteeism & Health Incentive Analysis | SQL + Power BI
+# HR Absenteeism & Health Incentive Analysis | SQL Server + Power BI
 
 ## Executive Summary
 - **Goal:** Reduce absenteeism costs and reward healthy, reliable employees using an end-to-end SQL → Power BI pipeline.
@@ -25,7 +25,7 @@ The mission of this project was to:
 - Use SQL queries to explore absenteeism drivers and calculate potential incentive payouts  
 - Build a dashboard in Power BI to visualize results and make the findings easy to interpret  
 
-*Note: This dataset is simulated. Some values don’t always align with real-world logic (for example, PhD salaries showing lower averages than high school salaries). In a real business setting, these anomalies would warant a data quality review. The focus here is on demonstrating technical workflow and communication of results, not the accuracy of the sample data.*  
+*Note: This dataset is simulated. Some values don’t always align with real-world logic (for example, PhD salaries showing lower averages than high school salaries). In a real business setting, these anomalies would warrant a data quality review. The focus here is on demonstrating technical workflow and communication of results, not the accuracy of the sample data.*  
 
 ---
 
@@ -41,24 +41,8 @@ For the Program we are defining eligibility as:
 - Absenteeism below the company average  
 
 #### SQL Solution
-```sql
-WITH base AS (
-    SELECT
-        ID,
-        Body_mass_index,
-        Social_smoker,
-        Disciplinary_failure,
-        Absenteeism_time_in_hours,
-        AVG(Absenteeism_time_in_hours) OVER () AS avg_abs_hrs
-    FROM Absenteeism_at_work
-)
-SELECT DISTINCT ID, Absenteeism_time_in_hours
-FROM base
-WHERE Social_smoker = 0
-  AND Disciplinary_failure = 0
-  AND Body_mass_index BETWEEN 18.5 AND 24.9
-  AND Absenteeism_time_in_hours <= avg_abs_hrs;
-```
+
+- [SQL Query Code](https://github.com/ColtonDumm/Employee_Incentive_Analysis/blob/master/SQL_Overview)
 
 #### Eligible Employees (preview)
 
@@ -71,44 +55,13 @@ WHERE Social_smoker = 0
 | 121 | 1 | 
 
 
-2. **Calculate wage adjustments for non-smokers**  
+### 2. **Calculate wage adjustments for non-smokers**  
    - Determine annual compensation increases  
    - Insurance budget: $983,221 allocated for non-smokers  
 
-```sql
---Create a table to select nonsmokers for the raise from the $983,221 budget
---Set the constants
-DECLARE @Budget MONEY = 983221; -- $983,221 budget to distribute
-DECLARE @HoursPerYear INT = 2080; -- 40 hrs * 52 wks
+- [SQL Query Code](https://github.com/ColtonDumm/Employee_Incentive_Analysis/blob/master/SQL_Overview)
 
---Count of eligible people (non-smokers)
-DECLARE @NonSmokerCount INT =
-(
-    SELECT COUNT(DISTINCT a.ID)
-    FROM Absenteeism_at_work a
-    WHERE a.Social_smoker = 0
-);
-
---Compute raise per person and per hour
-DECLARE @AnnualRaisePerEmployee DECIMAL(18,2) = @Budget / @NonSmokerCount;
-DECLARE @HourlyRaisePerEmployee DECIMAL(18,4) = @AnnualRaisePerEmployee / @HoursPerYear;
-
---Per employee results (non-smokers)
-SELECT
-    a.ID,
-    c.comp_hr as CurrentHourlyRate,
-    @HourlyRaisePerEmployee as HourlyRaise,
-    c.comp_hr + @HourlyRaisePerEmployee as NewHourlyRate,
-    c.comp_hr * @HoursPerYear as CurrentAnnualComp,
-    @AnnualRaisePerEmployee as AnnualRaise,
-    c.comp_hr * @HoursPerYear + @AnnualRaisePerEmployee as NewAnnualComp
-FROM Absenteeism_at_work a
-JOIN compensation c on c.ID = a.ID
-WHERE a.Social_smoker = 0
-ORDER BY a.ID;
-```
-
-#### Non-smoker Wage Adjustments (prieview)
+#### Non-smoker Wage Adjustments (preview)
 
 | ID | CurrentHourlyRate | HourlyRaise | NewHourlyRate | CurrentAnnualComp | AnnualRaise | NewAnnualComp |
 |---:|------------------:|------------:|--------------:|------------------:|------------:|--------------:|
@@ -120,14 +73,14 @@ ORDER BY a.ID;
 
 
 
-3. **Build a dashboard for HR leadership**  
+### 3. **Build a dashboard for HR leadership**  
    - Visualize absenteeism trends  
    - Enable exploration by health status, education, and hourly compensation 
 
 #### Final Dashboard
 [Click here to view the interactive dashboard](https://app.powerbi.com/view?r=eyJrIjoiNjE4MzJmYTgtMTE0YS00MjA4LTliZmMtMzJmYmNhYzQ4MzAzIiwidCI6IjllZjlmNDg5LWUwYTAtNGVlYi04N2NjLTNhNTI2MTEyZmQwZCIsImMiOjF9)  
 
-*(If you’d like to view screenshots, they are included in this repo.)*
+[Screenshots of the dashboard](https://github.com/ColtonDumm/Employee_Incentive_Analysis/blob/master/HR_Dashboard.png)
 
 ---
 
@@ -192,8 +145,8 @@ This is a **transaction + lookup + attribute** setup.
 ---
 
 ## Key Insights
-- People who are abstain from drinking and smoking take on average two less days absent. This leads to the company getting more labor and likely less payout to insure them.
-- Employsse who have attained higher levels of eduaction take less days off than their lesser educated counterparts.
+- Employees who are abstain from drinking and smoking take on average two less days absent. This leads to the company getting more labor and likely less payout to insure them.
+- Employees who have attained higher levels of education take less days off than their lesser educated counterparts.
 - The beginning and end months of summer have the highest total time of absenteeism. This is likely caused by a mix of vacations and kids getting off and going to school. Work productivity may dip during these periods and should be planned for accordingly,
 - Incentive programs can be structured to reward **low absenteeism and healthy work habits**.  
 
