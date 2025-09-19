@@ -46,7 +46,7 @@ The dataset covers **employee absenteeism and health records**.
 ---
 
 ## 📈 Final Dashboard
-👉 [Click here to view the interactive dashboard](YOUR_PUBLISH_TO_WEB_LINK)  
+👉 [Click here to view the interactive dashboard](https://app.powerbi.com/view?r=eyJrIjoiYTE3NGM1MjYtMTA3MC00OGMyLTk0YzQtYTJhZjgwMjE2ODJlIiwidCI6IjllZjlmNDg5LWUwYTAtNGVlYi04N2NjLTNhNTI2MTEyZmQwZCIsImMiOjF9)  
 
 *(If you’d like to view screenshots, they are included in this repo.)*
 
