@@ -56,5 +56,5 @@ It was lightly cleaned and structured before being used for SQL queries and Powe
 
 ## Personal Contact
 If you’d like to connect or collaborate, reach out via:  
-- [LinkedIn](https://www.linkedin.com/in/coltonhdumm/)  
+- [LinkedIn](https://linkedin.com/in/coltondumm/)  
 - GitHub: [Colton Dumm](https://github.com/ColtonDumm)  
