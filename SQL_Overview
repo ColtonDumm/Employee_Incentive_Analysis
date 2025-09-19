@@ -3,3 +3,112 @@
 This page documents the SQL used for the HR Absenteeism & Health Incentive Analysis project.  
 All queries target SQL Server tables: `Absenteeism_at_work`, `compensation`, and `Reasons`.
 
+### 1) Optimized Select with Derived Columns (season, weekday, education, BMI)
+A narrowed projection with CASE logic for friendly categories.
+
+```sql  
+select 
+a.ID,
+r.Reason, 
+Body_mass_index,
+CASE WHEN Body_mass_index < 18.5 then 'Underweight'
+     WHEN Body_mass_index between 18.5 and 25 then 'Healthy Weight'
+     WHEN Body_mass_index between 25 and 30 then 'Overweight'
+     WHEN Body_mass_index > 30 then 'Obese'
+     ELSE 'Unknown' end as BMI_Catagory,
+CASE WHEN Month_of_absence IN (12,1,2) Then 'Winter'
+     WHEN Month_of_absence IN (3,4,5) Then 'Spring'
+     WHEN Month_of_absence IN (6,7,8) Then 'Summer'
+     WHEN Month_of_absence IN (9,10,11) Then 'Fall'
+     ELSE 'Unknown' END as Season_Names,
+CASE WHEN Day_of_the_week = 1 Then 'Sunday'
+     When Day_of_the_week = 2 Then 'Monday'
+     When Day_of_the_week = 3 Then 'Tuesday'
+     When Day_of_the_week = 4 Then 'Wednesday'
+     When Day_of_the_week = 5 Then 'Thursday'
+     When Day_of_the_week = 6 Then 'Friday'
+     When Day_of_the_week = 7 Then 'Saturday' 
+     ELSE 'Unknown' END as Weekday_Names,
+CASE WHEN Education = 1 Then 'Highschool'
+     WHEN Education = 2 Then 'Bachelors'
+     WHEN Education = 3 Then 'Masters'
+     WHEN Education = 4 Then 'PHD'
+     ELSE 'Unknown' END as Eduacation_Named,
+Seasons,
+Month_of_absence,
+Day_of_the_week,
+Transportation_Expense,
+Education,
+Son,
+Social_drinker,
+Social_smoker,
+Pet,
+Disciplinary_failure,
+Age,
+Work_load_Average_day,
+Absenteeism_time_in_hours,
+comp_hr 
+from Absenteeism_at_work as a
+left join compensation as c
+on a.ID = c.ID
+left join Reasons as r
+on a.Reason_for_absence = r.Number;
+```
+
+### 2) $1,000 Health Bonus Eligibility (stricter, bottom 25% absence)
+Eligible = Non-smoker, healthy BMI, no disciplinary failure, and at/below the 25th percentile of absence hours.
+
+```sql 
+WITH ranked AS (
+  SELECT
+    ID,
+    Body_mass_index,
+    Social_smoker,
+    Disciplinary_failure,
+    Absenteeism_time_in_hours,
+    PERCENTILE_CONT(0.25) WITHIN GROUP (ORDER BY Absenteeism_time_in_hours)
+      OVER () AS p25_abs
+  FROM Absenteeism_at_work
+)
+SELECT DISTINCT ID, Absenteeism_time_in_hours
+FROM ranked
+WHERE Social_smoker = 0
+  AND Disciplinary_failure = 0
+  AND Body_mass_index BETWEEN 18.5 AND 24.9
+  AND Absenteeism_time_in_hours <= p25_abs;
+```
+
+### 3) Wage Adjustments for Non-Smokers (budget = $983,221)
+Distributes the insurance budget evenly across non-smokers and calculates new hourly/annual comp.
+
+```sql  
+--Set the constants
+DECLARE @Budget MONEY = 983221; -- $983,221 budget to distribute
+DECLARE @HoursPerYear INT = 2080; -- 40 hrs * 52 wks
+
+--Count of eligible people (non-smokers)
+DECLARE @NonSmokerCount INT =
+(
+    SELECT COUNT(DISTINCT a.ID)
+    FROM Absenteeism_at_work a
+    WHERE a.Social_smoker = 0
+);
+
+--Compute raise per person and per hour
+DECLARE @AnnualRaisePerEmployee DECIMAL(18,2) = @Budget / @NonSmokerCount;
+DECLARE @HourlyRaisePerEmployee DECIMAL(18,4) = @AnnualRaisePerEmployee / @HoursPerYear;
+
+--Per employee results (non-smokers)
+SELECT
+    a.ID,
+    c.comp_hr as CurrentHourlyRate,
+    @HourlyRaisePerEmployee as HourlyRaise,
+    c.comp_hr + @HourlyRaisePerEmployee as NewHourlyRate,
+    c.comp_hr * @HoursPerYear as CurrentAnnualComp,
+    @AnnualRaisePerEmployee as AnnualRaise,
+    c.comp_hr * @HoursPerYear + @AnnualRaisePerEmployee as NewAnnualComp
+FROM Absenteeism_at_work a
+JOIN compensation c on c.ID = a.ID
+WHERE a.Social_smoker = 0
+ORDER BY a.ID;
+```
