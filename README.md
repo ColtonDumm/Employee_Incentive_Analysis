@@ -18,6 +18,47 @@ The mission of this project was to:
 
 ---
 
+## 📝 HR Requests
+The HR department requested analysis and reporting to support a new incentive program. Their key requirements were:
+
+### 1. **Identify healthy employees with low absenteeism**  
+The HR team requested a list of employees eligible for a **$1,000 health bonus program**.  
+For the Program we are defining eligibility as:
+- Non-smoker  
+- Healthy BMI (18.5–24.9)  
+- No disciplinary failures  
+- Absenteeism below the company average  
+
+#### SQL Solution
+```sql
+WITH base AS (
+    SELECT
+        ID,
+        Body_mass_index,
+        Social_smoker,
+        Disciplinary_failure,
+        Absenteeism_time_in_hours,
+        AVG(Absenteeism_time_in_hours) OVER () AS avg_abs_hrs
+    FROM Absenteeism_at_work
+)
+SELECT DISTINCT ID, Absenteeism_time_in_hours
+FROM base
+WHERE Social_smoker = 0
+  AND Disciplinary_failure = 0
+  AND Body_mass_index BETWEEN 18.5 AND 24.9
+  AND Absenteeism_time_in_hours <= avg_abs_hrs;
+```
+
+2. **Calculate wage adjustments for non-smokers**  
+   - Determine annual compensation increases  
+   - Insurance budget: $983,221 allocated for non-smokers  
+
+3. **Build a dashboard for HR leadership**  
+   - Visualize absenteeism trends  
+   - Enable exploration by health status, education, and workload  
+
+---
+
 ## 🛠️ Tools & Skills
 - **SQL (Microsoft SQL Server)**: joins, filters, aggregations, case logic, query optimization  
 - **Power BI**: data modeling, KPIs, custom sorting, interactive visuals, dashboard design  
