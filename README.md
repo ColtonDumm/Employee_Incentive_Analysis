@@ -1,47 +1,42 @@
-# Data Analysis Portfolio Project #3 | End-to-End SQL to Dashboard
+# HR Absenteeism & Incentive Analysis | SQL + Power BI
 
 ## 📊 Project Overview
-This project is an **end-to-end data analysis case study** using an HR dataset on absenteeism and health.  
-The goal was to provide a **data-driven approach** to determine how to design bonuses and incentives for healthier employees.  
-
-The workflow includes:  
-- Building and uploading data into a **SQL Server database**  
-- Writing **SQL queries** to analyze absenteeism patterns and compensation  
-- Connecting results into **Power BI**  
-- Designing an interactive dashboard to visualize insights  
+This project explores employee absenteeism and health data to understand workforce trends and design potential incentive programs.  
+The work covers the full process: building a SQL database, writing queries to analyze absenteeism patterns, and creating an interactive Power BI dashboard for HR decision-making.  
 
 ---
 
-## 🛠️ Skills & Tools Used
-- **SQL (Microsoft SQL Server)**  
-  - Database creation and management  
-  - Table joins and filtering  
-  - Aggregate functions and case logic  
-  - Query optimization  
-- **Power BI**  
-  - Data modeling and transformation  
-  - Dashboard development based on business requirements  
-  - Interactive visuals and custom sorting  
-- **GitHub**  
-  - Version control and project sharing  
+## 🎯 Problem & Mission
+Employee absenteeism can lead to lower productivity and higher costs. HR leaders often look for ways to reward reliable and healthy employees while managing overall workforce costs.  
+
+The mission of this project was to:
+- Load and manage HR data in SQL Server  
+- Use SQL queries to explore absenteeism drivers and calculate potential incentive payouts  
+- Build a dashboard in Power BI to visualize results and make the findings easy to interpret  
+
+*Note: This dataset is simulated for practice. Some values don’t always align with real-world logic (for example, PhD salaries showing lower averages than high school salaries). In a real business setting, these anomalies would trigger a data quality review. The focus here is on demonstrating technical workflow and communication of results, not the accuracy of the sample data.*  
+
+---
+
+## 🛠️ Tools & Skills
+- **SQL (Microsoft SQL Server)**: joins, filters, aggregations, case logic, query optimization  
+- **Power BI**: data modeling, KPIs, custom sorting, interactive visuals, dashboard design  
+- **GitHub**: project documentation and version control  
 
 ---
 
 ## 📂 Dataset
-The dataset covers **employee absenteeism and health records**.  
-- Features include: age, education, work load, absenteeism reasons, and health indicators.  
-- Data was cleaned, structured, and analyzed to support incentive planning.  
+The dataset includes information on employee demographics, education, workload, health indicators, and reasons for absence.  
+It was lightly cleaned and structured before being used for SQL queries and Power BI reporting.  
 
 ---
 
 ## 📑 Project Workflow
-1. **Problem Definition** – Identify the HR challenge around absenteeism and incentives  
-2. **Database Setup** – Create and load dataset into SQL Server  
-3. **SQL Analysis** – Explore absenteeism, health factors, and workload trends  
-4. **Compensation Modeling** – Use SQL `CASE` statements to simulate incentive structures  
-5. **Power BI Integration** – Import SQL results into Power BI for visualization  
-6. **Dashboard Development** – Build an interactive report with drill-downs and KPIs  
-7. **Final Insights** – Deliver actionable findings for HR decision-making  
+1. **Database Setup** – Load HR dataset into SQL Server  
+2. **SQL Queries** – Join and filter data to analyze absenteeism, workload, and compensation  
+3. **Compensation Modeling** – Use SQL `CASE` statements to simulate different bonus rules  
+4. **Power BI Integration** – Import SQL results and prepare the data model  
+5. **Dashboard Build** – Create visuals, KPIs, and slicers to allow HR leaders to explore insights  
 
 ---
 
