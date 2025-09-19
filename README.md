@@ -46,11 +46,9 @@ The dataset covers **employee absenteeism and health records**.
 ---
 
 ## 📈 Final Dashboard
-👉 [Click here to view the interactive dashboard](https://app.powerbi.com/view?r=eyJrIjoiYTE3NGM1MjYtMTA3MC00OGMyLTk0YzQtYTJhZjgwMjE2ODJlIiwidCI6IjllZjlmNDg5LWUwYTAtNGVlYi04N2NjLTNhNTI2MTEyZmQwZCIsImMiOjF9)  
+👉 [Click here to view the interactive dashboard](https://app.powerbi.com/view?r=eyJrIjoiNjE4MzJmYTgtMTE0YS00MjA4LTliZmMtMzJmYmNhYzQ4MzAzIiwidCI6IjllZjlmNDg5LWUwYTAtNGVlYi04N2NjLTNhNTI2MTEyZmQwZCIsImMiOjF9)  
 
 *(If you’d like to view screenshots, they are included in this repo.)*
-
-<iframe title="HR_Analysis_Dashboard" width="600" height="373.5" src="https://app.powerbi.com/view?r=eyJrIjoiYTE3NGM1MjYtMTA3MC00OGMyLTk0YzQtYTJhZjgwMjE2ODJlIiwidCI6IjllZjlmNDg5LWUwYTAtNGVlYi04N2NjLTNhNTI2MTEyZmQwZCIsImMiOjF9" frameborder="0" allowFullScreen="true"></iframe>
 
 ---
 
@@ -61,7 +59,7 @@ The dataset covers **employee absenteeism and health records**.
 
 ---
 
-## 📬 Contact
+## Personal Contact
 If you’d like to connect or collaborate, reach out via:  
 - [LinkedIn](https://www.linkedin.com/in/coltonhdumm/)  
 - GitHub: [Colton Dumm](https://github.com/ColtonDumm)  
