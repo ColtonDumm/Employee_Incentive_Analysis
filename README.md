@@ -1,13 +1,13 @@
 # HR Absenteeism & Health Incentive Analysis | SQL Server + Power BI
 
 ## Executive Summary
-- **Goal:** Reduce absenteeism costs and reward healthy, reliable employees using an end-to-end SQL → Power BI pipeline.
+- **Goal:** Reduce absenteeism costs and reward healthy, reliable employees using an end-to-end SQL to Power BI pipeline.
 - **What I built:** (1) SQL logic to identify bonus-eligible employees, (2) a budget-driven wage-uplift model for non-smokers, and (3) an interactive HR dashboard.
 - **Eligibility (health bonus):** Non-smoker, BMI 18.5–24.9, no disciplinary failures, and absenteeism **≤ company average**.
 - **Non-smoker wage adjustment:** Insurance budget **$983,221** distributed evenly across all non-smokers → per-employee raise = `Budget / NonSmokerCount`  
-  ↳ Example with current data: ≈ **$0.69/hour** (~**$1.43k/year**).
-- **Patterns observed (within this sample):** Higher absenteeism clusters in early/late summer; healthier behavior aligns with fewer absence hours; education patterns vary due to simulated data.
-- **Note:** Dataset is simulated for practice; anomalies are flagged in the report. Findings illustrate workflow and decision support, not definitive company policy.
+   Example with current data: ~ **$0.69/hour** (~**$1.43k/year**).
+- **Patterns observed (within this sample):** Higher absenteeism clusters in early/late summer, healthier behavior aligns with fewer absence hours, and education patterns vary due to simulated data.
+- **Note:** Dataset is simulated for practice and anomalies are flagged in the report. Findings illustrate workflow and decision support, not definitive company policy.
 
 --- 
 
